@@ -1,0 +1,186 @@
+body {
+ user-select: none;
+  background: #fff;
+  margin: 0;
+  padding: 0; 
+  width: 701px;
+  /* height: 410px; */
+  overflow: hidden;
+}
+#navi-container {
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.16);
+}
+#param-container {
+  position: absolute;
+  height: 640px;
+  box-shadow: 1px 0 3px 2px rgba(0, 0, 0, 0.16);
+  /* top: 50px; */
+  padding-top: 10px;
+  left: 0;
+  z-index: 98;
+  width: 380px;
+  /* margin-left: 30px; */
+  font-family: 'Courier New', Courier, monospace;
+}
+#help {
+  margin: 0;
+  float: right;
+  top:0;
+  z-index: 96;
+  width: calc(100% - 420px);
+  height: 410px;
+  background-color: rgba(0, 0, 0, 0.16);
+}
+#help > li {
+  font-size: 15px;
+  /* height: 40px; */
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 30px;
+  margin-bottom:  10px;
+}
+#title {
+  font-size: 18px;
+  line-height: 50px;
+  margin-left: 30px;
+  color: rgb(97, 97, 97);
+}
+.descripts {
+  width: 100%;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  left: 0;
+  margin-left: 35px;
+  color: rgb(141, 141, 141) 
+}
+.descripts::before {
+  content: "*";
+}
+.param-item {  
+  width: 100%;
+  height: 40px;
+}
+.larger {
+  height: 70px;
+}
+.param-item > label {  
+  /* text-align: bottom; */
+  margin-left: 30px;
+  vertical-align: bottom;
+  line-height: 40px;
+  font-weight: bold;
+  color: rgb(94, 94, 94);
+
+}
+
+.param-item > input,
+.param-item > select {
+  /* appearance: none; */
+  /* -webkit-appearance: none;; */
+  width: 130px;
+  font-size: 15px;
+  height: 30px;
+  line-height: 30px;
+  color: rgb(97, 97, 97);
+  font-family: 'Courier New', Courier, monospace;
+  padding: 0 0 0 10px; 
+  /* border-radius: 2px; */
+  outline: none;
+  border: none;
+  border-bottom: solid 1.5px rgb(168, 168, 168);
+  float: right;
+  margin-right: 60px;
+  transition: all 0.5s;
+}
+.param-item > input::selection {
+  background-color: rgba(0, 0, 0, 0.596);
+  color: rgb(214, 214, 214);
+}
+.param-item > input[type="checkbox" i] {
+  width: 20px;
+  height: 20px;
+}
+.param-item > select:hover {
+  cursor: pointer;
+  border-bottom: solid 1.5px rgb(97, 97, 97);
+}
+option{
+  font-size: 15px;
+  width: 120px;
+  outline: none;
+}
+option:hover {
+  cursor: pointer;
+}
+option::selection {
+  background-color: rgba(0, 10, 32, 0.466);
+  color: white;
+}
+.param-item > input:hover,
+.param-item > input:focus {
+  border: none;
+  outline: none;
+  border-bottom: solid 1.5px rgb(97, 97, 97);
+  color: black;
+}
+.param-item > button {
+  float: none;
+}
+#prev-container {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  overflow: scroll;
+  
+  width: calc(100% - 360px);
+  height: calc(100% - 50px);
+  background-color: rgb(216, 216, 216);
+}
+#view {
+  border: dotted 2px rgba(0, 0, 0, 0.658);
+}
+.param-item-1 {
+  height: 40px;
+  /* margin-left: 30px; */
+}
+.param-item-1 > input {
+  width: 180px;
+  padding-left: 20px;
+  height: 25px;
+  outline: none;
+  line-height: 25px;
+  margin-top: 10px;
+  margin-left: 30px;
+  border-radius: 5px;
+  transition: all 0.5s;
+  border: solid 1px rgb(214, 214, 214);
+}
+.param-item > button {
+  margin-top: 20px;
+  background-color: rgba(0, 10, 32, 0.61);
+  color: #fff;
+  transition: all 0.5s;
+  width: 120px;
+  height: 40px;
+  margin-left: 30px;
+  margin-right: 10px;
+  outline: none;
+  border-radius: 5px;
+  vertical-align: middle;
+  text-align: center;
+  border: none;
+  line-height: 40px;
+  font-size: 17px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.param-item > button:hover{
+  background-color: rgba(0, 10, 32, 0.466);
+  cursor: pointer;
+}

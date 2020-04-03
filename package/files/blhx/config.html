@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<title>配置</title>
+<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+</head>
+<body>
+<div id="param-container">
+    <div class="param-item">
+        <label for="top-most">置顶:</label>
+        <input type="checkbox" id="top-most">
+    </div>
+    <div class="param-item larger">
+        <label for="click-transparent">穿透:</label>
+        <input type="checkbox" id="click-transparent">
+        <div class="descripts">点击将传给下方窗口, 窗口对键鼠透明</div>
+    </div>
+    <div class="param-item larger">
+        <label for="show-in-taskbar">任务栏显示:</label>
+        <input type="checkbox" id="show-in-taskbar">
+        <div class="descripts">点击托盘栏图标可激活窗口并显示到前端</div>
+    </div>
+    <div class="param-item larger">
+        <label for="opacity">透明度:</label>
+        <input type="number" min="0" max="1" step="0.05" id="opacity">
+        <div class="descripts">范围为0(透明)~1(不透明)</div>
+    </div>
+    <div class="param-item">
+        <label for="zoom">缩放:</label>
+        <input type="number" min="0.05" step="0.05" id="zoom">
+    </div>
+    <div class="param-item">
+        <label for="reverse">翻转:</label>
+        <input type="checkbox" id="reverse">
+    </div>
+    <!--<div class="param-item">
+        <label for="chat">对话框:</label>
+        <select id="chat">
+            <option>(无)</option>
+            <option>摸头</option>
+            <option>切换尬舞/站立</option>
+            <option>拖拽</option>
+        </select>
+    </div>-->
+    <div class="param-item">
+        <label for="right-click">右键:</label>
+        <select id="right-click">
+            <option>(无)</option>
+            <option>摸头</option>
+            <option>切换尬舞/站立</option>
+        </select>
+    </div>
+    <div class="param-item">
+        <label for="dragmove-right">右键拖拽小人:</label>
+        <input type="checkbox" id="dragmove-right">
+    </div>
+    <div class="param-item">
+        <label for="left-click">左键:</label>
+        <select id="left-click">
+            <option>(无)</option>
+            <option>摸头</option>
+            <option>切换尬舞/站立</option>
+        </select>
+    </div>
+    <div class="param-item">
+        <label for="dragmove-left">左键拖拽小人:</label>
+        <input type="checkbox" id="dragmove-left">
+    </div>
+    <div class="param-item">
+        <label for="free">拖拽后静止:</label>
+        <input type="checkbox" id="free">
+    </div>
+    <div class="param-item">
+        <button type="button" onclick="apply()">应用</button>
+        <button type="button" onclick="reset()">重置</button>
+    </div>
+</div>
+    
+<script>
+/*
+    posX = 0; //
+    posY = 0; //
+    left = LeftKeyFunction.void;
+    right = RightKeyFunction.void;
+    leftDrag = false;
+    rightDrag = false;
+    topMost = false;
+    showInTaskbar = true;
+    opacity = 1;
+    zoom = 1;
+    reverse = false;
+    <!--walk = false;-->
+    free = false;
+    version = 1;
+    clickTransparent = false;
+*/
+    
+    function load() {
+        let settings = window.opener.userSettings;
+        document.getElementById('left-click').selectedIndex = settings.left;
+        document.getElementById('right-click').selectedIndex = settings.right;
+        document.getElementById('dragmove-left').checked = settings.leftDrag;
+        document.getElementById('dragmove-right').checked = settings.rightDrag;
+        document.getElementById('top-most').checked = settings.topMost;
+        document.getElementById('show-in-taskbar').checked = settings.showInTaskbar;
+        document.getElementById('opacity').value = settings.opacity.toString();
+        document.getElementById('zoom').value = settings.zoom.toString();
+        document.getElementById('reverse').checked = settings.reverse;
+        document.getElementById('free').checked = settings.free;
+        document.getElementById('click-transparent').checked = settings.clickTransparent;
+    }
+    
+    function apply() {
+        let settings = window.opener.userSettings;
+        settings.left = document.getElementById('left-click').selectedIndex;
+        settings.right = document.getElementById('right-click').selectedIndex;
+        settings.leftDrag = document.getElementById('dragmove-left').checked;
+        settings.rightDrag = document.getElementById('dragmove-right').checked;
+        settings.topMost = document.getElementById('top-most').checked;
+        settings.showInTaskbar = document.getElementById('show-in-taskbar').checked;
+        settings.opacity = parseFloat(document.getElementById('opacity').value);
+        if (settings.opacity > 1 || settings.opacity < 0) settings.opacity = 1;
+        settings.zoom = parseFloat(document.getElementById('zoom').value);
+        if (settings.zoom <= 0) settings.zoom = 1;
+        settings.reverse = document.getElementById('reverse').checked;
+        settings.free = document.getElementById('free').checked;
+        settings.clickTransparent = document.getElementById('click-transparent').checked;
+        <!--window.opener.settings.chat = document.getElementById('chat').checked;-->
+        window.opener.saveUserSettings();
+        window.opener.location.reload();
+    }
+    
+    function reset() {
+        window.opener.userSettings = new window.opener.UserSettings();
+        load()
+        window.opener.saveUserSettings();
+        window.opener.location.reload();
+    }
+    
+    load();
+</script>
+</body>
+</html>
