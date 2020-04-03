@@ -40,7 +40,7 @@ class UserSettings {
     version = 1;
     clickTransparent = false;
     constructor() {
-        this.posY = huiDesktop.WorkingArea.Top + huiDesktop.WorkingArea.Height - modelSettings.height * userSettings.zoom + modelSettings.y0 * userSettings.zoom;
+        this.posY = huiDesktop.WorkingArea.Top + huiDesktop.WorkingArea.Height - modelSettings.height + modelSettings.y0;
     }
 };
 
