@@ -7,6 +7,9 @@
 </head>
 <body>
 <div id="param-container">
+    <div class="param-item larger">
+        <div class="descripts">碧蓝航线基础框架 v1.3<br/>https://github.com/huix-oldcat/HuiDesktop-Blhx<br/>新增走动（拖拽静止以后也可以走动了，悬空步）<br/>QQ群：1087253704</div>
+    </div>
     <div class="param-item">
         <label for="top-most">置顶:</label>
         <input type="checkbox" id="top-most">
@@ -20,6 +23,11 @@
         <label for="show-in-taskbar">任务栏显示:</label>
         <input type="checkbox" id="show-in-taskbar">
         <div class="descripts">点击托盘栏图标可激活窗口并显示到前端</div>
+    </div>
+    <div class="param-item larger">
+        <label for="walk-random">走动随机因子:</label>
+        <input type="number" min="0" step="1" id="walk-random">
+        <div class="descripts">0为关闭随机走动，每秒判定几率为 1/随机因子</div>
     </div>
     <div class="param-item larger">
         <label for="opacity">透明度:</label>
@@ -49,6 +57,7 @@
             <option>(无)</option>
             <option>摸头</option>
             <option>切换尬舞/站立</option>
+            <option>走路</option>
         </select>
     </div>
     <div class="param-item">
@@ -61,6 +70,7 @@
             <option>(无)</option>
             <option>摸头</option>
             <option>切换尬舞/站立</option>
+            <option>走路</option>
         </select>
     </div>
     <div class="param-item">
@@ -78,24 +88,6 @@
 </div>
     
 <script>
-/*
-    posX = 0; //
-    posY = 0; //
-    left = LeftKeyFunction.void;
-    right = RightKeyFunction.void;
-    leftDrag = false;
-    rightDrag = false;
-    topMost = false;
-    showInTaskbar = true;
-    opacity = 1;
-    zoom = 1;
-    reverse = false;
-    <!--walk = false;-->
-    free = false;
-    version = 1;
-    clickTransparent = false;
-*/
-    
     function load() {
         let settings = window.opener.userSettings;
         document.getElementById('left-click').selectedIndex = settings.left;
@@ -104,6 +96,7 @@
         document.getElementById('dragmove-right').checked = settings.rightDrag;
         document.getElementById('top-most').checked = settings.topMost;
         document.getElementById('show-in-taskbar').checked = settings.showInTaskbar;
+        document.getElementById('walk-random').value = settings.walkRandom.toString();
         document.getElementById('opacity').value = settings.opacity.toString();
         document.getElementById('zoom').value = settings.zoom.toString();
         document.getElementById('reverse').checked = settings.reverse;
@@ -119,6 +112,7 @@
         settings.rightDrag = document.getElementById('dragmove-right').checked;
         settings.topMost = document.getElementById('top-most').checked;
         settings.showInTaskbar = document.getElementById('show-in-taskbar').checked;
+        settings.walkRandom = parseInt(document.getElementById('walk-random').value);
         settings.opacity = parseFloat(document.getElementById('opacity').value);
         if (settings.opacity > 1 || settings.opacity < 0) settings.opacity = 1;
         settings.zoom = parseFloat(document.getElementById('zoom').value);
@@ -126,16 +120,14 @@
         settings.reverse = document.getElementById('reverse').checked;
         settings.free = document.getElementById('free').checked;
         settings.clickTransparent = document.getElementById('click-transparent').checked;
-        <!--window.opener.settings.chat = document.getElementById('chat').checked;-->
-        window.opener.saveUserSettings();
-        window.opener.location.reload();
+        //<!--window.opener.settings.chat = document.getElementById('chat').checked;-->
+        window.opener.remoteSaveUserSettings();
+        setTimeout(() => window.location.reload(), 1000);
     }
     
     function reset() {
-        window.opener.userSettings = new window.opener.UserSettings();
-        load()
-        window.opener.saveUserSettings();
-        window.opener.location.reload();
+        window.opener.remoteResetUserSettings();
+        setTimeout(() => window.location.reload(), 1000);
     }
     
     load();
