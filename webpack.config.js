@@ -5,19 +5,20 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'package/files/blhx')
   },
   module: {
     rules: [{
-      test: /\.tsx?$/,
-      use: 'ts-loader',
+      test: /\.ts$/,
+      use: 'awesome-typescript-loader',
       exclude: /node_modules/
     }]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.ts', '.js' ]
   },
   plugins: [
     new webpack.ProvidePlugin({PIXI: 'pixi.js'})
-  ]
+  ],
+  devtool: 'source-map'
 };

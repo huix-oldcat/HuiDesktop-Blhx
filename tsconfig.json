@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir": "src",
+    "outDir": "dist",
     "strict": true,
-    "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
-    "esModuleInterop": true
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
