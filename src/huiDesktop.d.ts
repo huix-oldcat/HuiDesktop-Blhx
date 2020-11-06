@@ -1,7 +1,7 @@
 /* eslint-disable accessor-pairs */
 // API Version = 1
 
-export declare class BasicWindow {
+declare class BasicWindow {
   get Left (): number;
   set Left (value: number);
   get Top (): number;
@@ -10,19 +10,19 @@ export declare class BasicWindow {
   set Height (value: number);
 }
 
-export declare class WorkingArea {
+declare class WorkingArea {
   get Left (): number;
   get Top (): number;
   get Width (): number;
   get Height (): number;
 }
 
-export declare class BasicScreen {
+declare class BasicScreen {
   get Width (): number;
   get Height (): number;
 }
 
-export declare class HuiDesktop {
+declare class HuiDesktop {
   get ApiVersion (): number;
 
   get Window (): BasicWindow;
@@ -36,5 +36,12 @@ export declare class HuiDesktop {
   set ClickTransparent (value: boolean);
 }
 
+declare type ExtendedWindow = Window & typeof globalThis & {
+  huiDesktop_DragMove_OnMouseRightDown: () => void
+  huiDesktop_DragMove_OnMouseLeftDown: () => void
+  huiDesktop_DragMove_OnMouseLeftUp: () => void
+  huiDesktop_DragMove_OnMouseRightUp: () => void
+  requestSettings: () => void
+}
+
 declare let huiDesktop: HuiDesktop
-export default huiDesktop

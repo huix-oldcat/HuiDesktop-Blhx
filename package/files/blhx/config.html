@@ -89,45 +89,16 @@
     
 <script>
     function load() {
-        let settings = window.opener.userSettings;
-        document.getElementById('left-click').selectedIndex = settings.left;
-        document.getElementById('right-click').selectedIndex = settings.right;
-        document.getElementById('dragmove-left').checked = settings.leftDrag;
-        document.getElementById('dragmove-right').checked = settings.rightDrag;
-        document.getElementById('top-most').checked = settings.topMost;
-        document.getElementById('show-in-taskbar').checked = settings.showInTaskbar;
-        document.getElementById('walk-random').value = settings.walkRandom.toString();
-        document.getElementById('opacity').value = settings.opacity.toString();
-        document.getElementById('zoom').value = settings.zoom.toString();
-        document.getElementById('reverse').checked = settings.reverse;
-        document.getElementById('free').checked = settings.free;
-        document.getElementById('click-transparent').checked = settings.clickTransparent;
+        window.opener.userSettings.showSettings(document)
     }
     
     function apply() {
-        let settings = window.opener.userSettings;
-        settings.left = document.getElementById('left-click').selectedIndex;
-        settings.right = document.getElementById('right-click').selectedIndex;
-        settings.leftDrag = document.getElementById('dragmove-left').checked;
-        settings.rightDrag = document.getElementById('dragmove-right').checked;
-        settings.topMost = document.getElementById('top-most').checked;
-        settings.showInTaskbar = document.getElementById('show-in-taskbar').checked;
-        settings.walkRandom = parseInt(document.getElementById('walk-random').value);
-        settings.opacity = parseFloat(document.getElementById('opacity').value);
-        if (settings.opacity > 1 || settings.opacity < 0) settings.opacity = 1;
-        settings.zoom = parseFloat(document.getElementById('zoom').value);
-        if (settings.zoom <= 0) settings.zoom = 1;
-        settings.reverse = document.getElementById('reverse').checked;
-        settings.free = document.getElementById('free').checked;
-        settings.clickTransparent = document.getElementById('click-transparent').checked;
-        //<!--window.opener.settings.chat = document.getElementById('chat').checked;-->
-        window.opener.remoteSaveUserSettings();
-        setTimeout(() => window.location.reload(), 1000);
+        window.opener.userSettings.saveSettings(document)
+        window.opener.location.reload()
     }
     
     function reset() {
-        window.opener.remoteResetUserSettings();
-        setTimeout(() => window.location.reload(), 1000);
+        window.location.reload()
     }
     
     load();

@@ -1,7 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
+const process = require('process')
+const path = require('path')
+const webpack = require('webpack')
 
-module.exports = {
+const conf = {
   entry: './src/index.ts',
   output: {
     filename: 'bundle.js',
@@ -15,10 +16,15 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: [ '.ts', '.js' ]
+    extensions: ['.ts', '.js']
   },
   plugins: [
-    new webpack.ProvidePlugin({PIXI: 'pixi.js'})
+    new webpack.ProvidePlugin({ PIXI: 'pixi.js' })
   ],
-  devtool: 'source-map'
-};
+  devtool: undefined
+}
+
+console.log(process.env.BUILD_LEVEL)
+if (process.env.BUILD_LEVEL === 'development') conf.devtool = 'inline-source-map'
+
+module.exports = conf

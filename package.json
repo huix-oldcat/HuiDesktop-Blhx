@@ -23,7 +23,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "build": "npx webpack --mode production",
-    "build-dev": "npx webpack --mode development"
+    "build": "npx webpack --mode=production",
+    "build-dev": "set BUILD_LEVEL=development && npx webpack --mode=development"
   }
 }
