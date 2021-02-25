@@ -1,4 +1,11 @@
-import HuiDesktopAzureLaneApplication from "./app"
+/* eslint-disable @typescript-eslint/promise-function-async */
+import HuiDesktopAzureLaneApplication from './app'
+import autoMake from './autoMake'
 
-HuiDesktopAzureLaneApplication.CreateSingleCharacterApp(window.location.hash.substr(1))
-  .then(app => app.run())
+fetch('https://huidesktop/config')
+  .then(response => response.text())
+  .then(param => {
+    if (!param.includes('{')) autoMake(param).catch(console.error)
+    else HuiDesktopAzureLaneApplication.CreateSingleCharacterApp(JSON.parse(param)).then(app => app.run()).catch(console.error)
+  })
+  .catch(console.error)

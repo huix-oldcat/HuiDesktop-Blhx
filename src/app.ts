@@ -11,11 +11,7 @@ export default class HuiDesktopAzureLaneApplication {
   app: PIXI.Application
   character: Character
 
-  public static async CreateSingleCharacterApp (modelSettingsLocation: string): Promise<HuiDesktopAzureLaneApplication> {
-    // download model settings
-    const file = await fetch(modelSettingsLocation).then(async (x) => await x.text())
-    const modelSettings = JSON.parse(file) as ModelSettings
-
+  public static async CreateSingleCharacterApp (modelSettings: ModelSettings): Promise<HuiDesktopAzureLaneApplication> {
     // set the basic window directly -- only one character
     const userSettings = UserSettings.readUserSettings(modelSettings)
     const { width: exWidth, height: exHeight } = ShapeManager.getRectSize(modelSettings, userSettings.scale)
