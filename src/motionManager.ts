@@ -41,20 +41,22 @@ export default class MotionManager {
     this.enableRandomWalk()
 
     // set the animation
-    this._animation.state.addListener({ complete: this.onAnimationComplete })
+    this._animation.state.addListener({ complete: t => this.onAnimationComplete(t) })
     this._animation.interactive = true
+
     this._animation.on('mousedown', () => this.leftClick())
+    window.huiDesktop_DragMove_OnMouseLeftClick = () => this.leftClick()
     this._animation.on('rightdown', () => this.rightClick())
+    window.huiDesktop_DragMove_OnMouseRightClick = () => this.rightClick()
   }
 
   private dragInit (): void {
     // these functions will be called when the window is begin dragging
-    // in this application we don't care which mouse button is used
-    const window_ = window as ExtendedWindow
-    window_.huiDesktop_DragMove_OnMouseRightDown = () => this.dragDown()
-    window_.huiDesktop_DragMove_OnMouseLeftDown = () => this.dragDown()
-    window_.huiDesktop_DragMove_OnMouseLeftUp = () => this.dragUp()
-    window_.huiDesktop_DragMove_OnMouseRightUp = () => this.dragUp()
+    // we don't care which mouse button is used, dragDown is dragDown
+    window.huiDesktop_DragMove_OnMouseRightDown = () => this.dragDown()
+    window.huiDesktop_DragMove_OnMouseLeftDown = () => this.dragDown()
+    window.huiDesktop_DragMove_OnMouseLeftUp = () => this.dragUp()
+    window.huiDesktop_DragMove_OnMouseRightUp = () => this.dragUp()
   }
 
   private enableRandomWalk (): void {
@@ -150,8 +152,8 @@ export default class MotionManager {
 
     const target = this._shapeManager.groundLocation
 
-    this._tween = new Tween(huiDesktop.Window)
-    this._tween.to({ Top: target }, 0.666 * Math.abs(target - huiDesktop.Window.Top)) // speed = 0.666ms * pixels
+    this._tween = new Tween(huiDesktop.window)
+    this._tween.to({ Top: target }, 0.666 * Math.abs(target - huiDesktop.window.top)) // speed = 0.666ms * pixels
     this._tween.onStart(_ => { this._currentMotion = motion.flying })
     this._tween.onComplete(_ => { this.resetToIdel(); this._userSettings.save(true) })
     this._tween.start()
@@ -168,8 +170,8 @@ export default class MotionManager {
     const walkDistance = 200 * this._shapeManager.scale * roundCount
     const walkTime = 1000 * this._animation.spineData.findAnimation('walk').duration * roundCount
 
-    this._tween = new Tween(huiDesktop.Window)
-    this._tween.to({ Left: huiDesktop.Window.Left + walkDistance * (this._shapeManager.flip ? -1 : 1) }, walkTime)
+    this._tween = new Tween(huiDesktop.window)
+    this._tween.to({ Left: huiDesktop.window.left + walkDistance * (this._shapeManager.flip ? -1 : 1) }, walkTime)
     this._tween.onStart(_ => { this._currentMotion = motion.walking; this._animation.state.setAnimation(0, 'walk', true) })
     this._tween.onComplete(_ => { this.resetToIdel(); this._userSettings.save(true) })
     this._tween.start()

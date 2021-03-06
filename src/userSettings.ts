@@ -54,8 +54,8 @@ export default class UserSettings {
 
   public save (savePos = false): void {
     if (savePos) {
-      this.posX = huiDesktop.Window.Left
-      this.posY = huiDesktop.Window.Top
+      this.posX = huiDesktop.window.left
+      this.posY = huiDesktop.window.top
     }
     localStorage.setItem(`cc.huix.blhx.${this.name}`, JSON.stringify(this))
   }

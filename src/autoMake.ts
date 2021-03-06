@@ -17,19 +17,19 @@ interface lastMemory {
 }
 
 export default async (name: string): Promise<void> => {
-  huiDesktop.DragMoveLeft = huiDesktop.DragMoveRight = true
+  huiDesktop.dragMoveLeft = huiDesktop.dragMoveRight = true
   document.body.style.background = 'rgba(255,255,255,0.7)'
 
   const app = (() => {
     const lastStr = sessionStorage.getItem('automake')
     if (lastStr !== null) {
       const last = JSON.parse(lastStr) as lastMemory
-      huiDesktop.Window.Width = last.width + 20
-      huiDesktop.Window.Height = last.height + 20 + 20
+      huiDesktop.window.width = last.width + 20
+      huiDesktop.window.height = last.height + 20 + 20
       return new PIXI.Application({ width: last.width + 20, height: last.height + 20, transparent: true })
     }
-    huiDesktop.Window.Width = 512
-    huiDesktop.Window.Height = 512 + 20
+    huiDesktop.window.width = 512
+    huiDesktop.window.height = 512 + 20
     return new PIXI.Application({ width: 512, height: 512, transparent: true })
   })()
   const info = document.createElement('div')

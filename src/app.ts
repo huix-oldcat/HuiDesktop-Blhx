@@ -15,15 +15,15 @@ export default class HuiDesktopAzureLaneApplication {
     // set the basic window directly -- only one character
     const userSettings = UserSettings.readUserSettings(modelSettings)
     const { width: exWidth, height: exHeight } = ShapeManager.getRectSize(modelSettings, userSettings.scale)
-    huiDesktop.Window.Width = exWidth
-    huiDesktop.Window.Height = exHeight
-    huiDesktop.Window.Left = userSettings.posX
-    huiDesktop.Window.Top = userSettings.posY
-    huiDesktop.ClickTransparent = userSettings.clickTransparent
-    huiDesktop.DragMoveLeft = userSettings.leftDrag
-    huiDesktop.DragMoveRight = userSettings.rightDrag
-    huiDesktop.ShowInTaskbar = userSettings.showInTaskbar
-    huiDesktop.TopMost = userSettings.topMost
+    huiDesktop.window.width = exWidth
+    huiDesktop.window.height = exHeight
+    huiDesktop.window.left = userSettings.posX
+    huiDesktop.window.top = userSettings.posY
+    huiDesktop.clickTransparent = userSettings.clickTransparent
+    huiDesktop.dragMoveLeft = userSettings.leftDrag
+    huiDesktop.dragMoveRight = userSettings.rightDrag
+    huiDesktop.showInTaskbar = userSettings.showInTaskbar
+    huiDesktop.topMost = userSettings.topMost
 
     // directly create huidesktop azure-lane application
     const app = new PIXI.Application({ width: exWidth, height: exHeight, transparent: true, autoStart: false })
@@ -37,8 +37,8 @@ export default class HuiDesktopAzureLaneApplication {
     app.view.style.opacity = character.userSettings.opacity.toString()
     character.addToStage(app)
     document.body.appendChild(app.view);
-    (window as Record<string, any>).userSettings = character.userSettings;
-    (window as ExtendedWindow).requestSettings = () => window.open('config.html', '设置', 'width=370, height=790')
+    (window as Record<string, any>).userSettings = character.userSettings
+    window.requestSettings = () => window.open('config.html', '设置', 'width=370, height=790')
   }
 
   public run (): void {

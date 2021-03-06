@@ -2,41 +2,43 @@
 // API Version = 1
 
 declare class BasicWindow {
-  get Left (): number;
-  set Left (value: number);
-  get Top (): number;
-  set Top (value: number);
-  set Width (value: number);
-  set Height (value: number);
+  get left (): number;
+  set left (value: number);
+  get top (): number;
+  set top (value: number);
+  set width (value: number);
+  set height (value: number);
 }
 
 declare class WorkingArea {
-  get Left (): number;
-  get Top (): number;
-  get Width (): number;
-  get Height (): number;
+  get left (): number;
+  get top (): number;
+  get width (): number;
+  get height (): number;
 }
 
 declare class BasicScreen {
-  get Width (): number;
-  get Height (): number;
+  get width (): number;
+  get height (): number;
 }
 
 declare class HuiDesktop {
-  get ApiVersion (): number;
+  get apiVersion (): number;
 
-  get Window (): BasicWindow;
-  get WorkingArea (): WorkingArea;
-  get Screen (): BasicScreen;
+  get window (): BasicWindow;
+  get workingArea (): WorkingArea;
+  get screen (): BasicScreen;
 
-  set TopMost (value: boolean);
-  set DragMoveLeft (value: boolean);
-  set DragMoveRight (value: boolean);
-  set ShowInTaskbar (value: boolean);
-  set ClickTransparent (value: boolean);
+  set topMost (value: boolean);
+  set dragMoveLeft (value: boolean);
+  set dragMoveRight (value: boolean);
+  set showInTaskbar (value: boolean);
+  set clickTransparent (value: boolean);
 }
 
-declare type ExtendedWindow = Window & typeof globalThis & {
+declare interface Window {
+  huiDesktop_DragMove_OnMouseRightClick: () => void
+  huiDesktop_DragMove_OnMouseLeftClick: () => void
   huiDesktop_DragMove_OnMouseRightDown: () => void
   huiDesktop_DragMove_OnMouseLeftDown: () => void
   huiDesktop_DragMove_OnMouseLeftUp: () => void

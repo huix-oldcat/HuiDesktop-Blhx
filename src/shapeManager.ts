@@ -8,7 +8,7 @@ import 'pixi-spine'
  */
 export default class ShapeManager {
   private _animation: PIXI.spine.Spine
-  private _modelSettings: ModelSettings
+  private readonly _modelSettings: ModelSettings
   private _scale = 1
   private _flip = false
 
@@ -63,22 +63,22 @@ export default class ShapeManager {
    * 计算地面坐标
    */
 
-  public static getGroundLocation(height: number, y0: number, scale: number): number {
-    return huiDesktop.WorkingArea.Top + huiDesktop.WorkingArea.Height - height * scale + y0 * scale
+  public static getGroundLocation (height: number, y0: number, scale: number): number {
+    return huiDesktop.workingArea.top + huiDesktop.workingArea.height - height * scale + y0 * scale
   }
 
-  public get groundLocation(): number {
+  public get groundLocation (): number {
     return ShapeManager.getGroundLocation(this._modelSettings.height, this._modelSettings.y0, this.scale)
   }
 
   /**
    * 计算（按当前朝向）可平移的距离
    */
-  public get maxWalkDistance(): number {
+  public get maxWalkDistance (): number {
     if (this.flip) {
-      return huiDesktop.Window.Left
+      return huiDesktop.window.left
     } else {
-      return huiDesktop.WorkingArea.Width + huiDesktop.WorkingArea.Left - huiDesktop.Window.Left - huiDesktop.Window.Width
+      return huiDesktop.workingArea.width + huiDesktop.workingArea.left - huiDesktop.window.left - huiDesktop.window.width
     }
   }
 }
