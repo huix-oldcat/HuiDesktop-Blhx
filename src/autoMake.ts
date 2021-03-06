@@ -1,5 +1,6 @@
 import 'pixi.js'
 import 'pixi-spine'
+import ModelSettings from './modelSettings'
 
 type LoaderReturnType = Partial<Record<string, PIXI.LoaderResource>>
 
@@ -16,7 +17,7 @@ interface lastMemory {
   height: number
 }
 
-export default async (name: string): Promise<void> => {
+export default async (name: string): Promise<ModelSettings> => {
   huiDesktop.dragMoveLeft = huiDesktop.dragMoveRight = true
   document.body.style.background = 'rgba(255,255,255,0.7)'
 
@@ -38,7 +39,6 @@ export default async (name: string): Promise<void> => {
   document.body.appendChild(app.view)
   const spine = await loadCharacter(app, name, '/sandbox/' + name + '.skel')
   app.stage.addChild(spine)
-  console.info(spine.getBounds())
 
   const dz = ['stand2', 'walk', 'touch', 'tuozhuai2', 'wash', 'victory']
   let len = 0
@@ -51,7 +51,8 @@ export default async (name: string): Promise<void> => {
   const update = (): void => {
     info.innerText = `x: ${final.x}, y: ${final.y}, w: ${final.w}, h: ${final.h}, t: ${fixed.t}/${len}`
     if (final.w > app.view.width || final.h > app.view.height) {
-      sessionStorage.setItem('automake', JSON.stringify({ width: final.w + 50, height: final.h + 50 } as lastMemory))
+      const saving: lastMemory = { width: final.w + (final.w > app.view.width ? 100 : 0), height: final.h + (final.h > app.view.height ? 100 : 0) }
+      sessionStorage.setItem('automake', JSON.stringify(saving))
       location.reload()
     }
   }
@@ -61,39 +62,36 @@ export default async (name: string): Promise<void> => {
 
   spine.state.setAnimation(0, dz[fixed.d], true)
 
-  const stopToken = setInterval(() => {
-    const bound = spine.getBounds()
-    console.info(bound)
-    if (bound.x < 0) fixed.x = Math.ceil(fixed.x - bound.x)
-    if (bound.y < 0) fixed.y = Math.ceil(fixed.y - bound.y)
-    fixed.w = Math.max(fixed.w, Math.ceil(bound.width + bound.x))
-    fixed.h = Math.max(fixed.h, Math.ceil(bound.height + bound.y))
-    spine.x = fixed.x
-    spine.y = fixed.y
+  return await new Promise<ModelSettings>(resolve => {
+    const stopToken = setInterval(() => {
+      const bound = spine.getBounds()
+      if (bound.x < 0) fixed.x = Math.ceil(fixed.x - bound.x)
+      if (bound.y < 0) fixed.y = Math.ceil(fixed.y - bound.y)
+      fixed.w = Math.max(fixed.w, Math.ceil(bound.width + bound.x))
+      fixed.h = Math.max(fixed.h, Math.ceil(bound.height + bound.y))
+      spine.x = fixed.x
+      spine.y = fixed.y
 
-    if (same()) fixed.t += 1
-    else { fixed.t = 0; copy() }
-    if (fixed.t > len) {
-      fixed.t = 0
-      fixed.d += 1
-      if (dz[fixed.d] === 'victory') {
-        clearInterval(stopToken)
-        fetch('/config', {
-          method: 'POST',
-          body: JSON.stringify({
+      if (same()) fixed.t += 1
+      else { fixed.t = 0; copy() }
+      if (fixed.t > len) {
+        fixed.t = 0
+        fixed.d += 1
+        if (dz[fixed.d] === 'victory') {
+          clearInterval(stopToken)
+          const settings: ModelSettings = {
             width: final.w,
             height: final.h,
             x0: final.x,
             y0: final.h - final.y,
             location: `/sandbox/${name}.skel`,
             name
-          })
-        }).then(() => location.reload()).catch(console.error)
+          }
+          resolve(settings)
+        }
+        spine.state.setAnimation(0, dz[fixed.d], true)
       }
-      spine.state.setAnimation(0, dz[fixed.d], true)
-    }
-    update()
-  }, 16)
-
-  ;(window as any).qwqqaq = stopToken
+      update()
+    }, 16)
+  })
 }

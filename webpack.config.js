@@ -21,7 +21,7 @@ const conf = {
   plugins: [
     new webpack.ProvidePlugin({ PIXI: 'pixi.js' })
   ],
-  devtool: undefined
+  devtool: 'inline-source-map'
 }
 
 console.log(process.env.BUILD_LEVEL)
